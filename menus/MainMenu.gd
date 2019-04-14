@@ -17,9 +17,15 @@ func _ready():
 
 
 func _on_StartButton_pressed():
-	get_tree().change_scene("res://World.tscn")
+	Global.character_controller_2 = Character.ControllerType.AI	
+	get_tree().change_scene("res://Battle.tscn")
 	pass # replace with function body
 
+
+func _on_PracticeButton_pressed():
+	Global.character_controller_2 = Character.ControllerType.DEFAULT
+	get_tree().change_scene("res://Battle.tscn")
+	pass # Replace with function body.
 
 func _on_OptionButton_pressed():
 	pass # replace with function body
@@ -28,3 +34,4 @@ func _on_OptionButton_pressed():
 func _on_EndButton_pressed():
 	get_tree().quit()
 	pass # replace with function body
+

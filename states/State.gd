@@ -13,40 +13,71 @@ func update(character: Character,delta):
 	pass
 	
 func exit(character: Character):
+#	character.transit_data.clear()
 	pass
 	
-func input(character : Character, event: InputEvent):
-	if event.is_action_pressed("punch"):
-		if state_name.ends_with('_Punch3'):
+func input(character : Character, event: InputEvent):		
+	if character.is_on_floor():
+		if event.is_action_pressed("punch"):
+			if state_name.ends_with('_Punch3'):
+				return
+			elif state_name.ends_with('_Punch2'):
+				character.change_state("Startup_Punch3")
+				return
+			elif state_name.ends_with('_Punch'):
+				character.change_state("Startup_Punch2")
+				return
+			else:
+				character.change_state("Startup_Punch")
+				return
 			return
-		elif state_name.ends_with('_Punch2'):
-			character.change_state("Startup_Punch3")
+				
+		if event.is_action_pressed("kick"):
+			if state_name.ends_with('_Kick'):
+				return
+			character.change_state("Startup_Kick")
 			return
-		elif state_name.ends_with('_Punch'):
-			character.change_state("Startup_Punch2")
-			return
-		else:
-			character.change_state("Startup_Punch")
-			return
-		return
 			
-	if event.is_action_pressed("kick"):
-		if state_name.ends_with('_Kick'):
+		if event.is_action_pressed("special_punch"):
+			if state_name.ends_with('_SpecialPunch'):
+				return
+			character.change_state("Startup_SpecialPunch")
 			return
-		character.change_state("Startup_Kick")
-		return
-		
-	if event.is_action_pressed("special_punch"):
-		character.change_state("Startup_SpecialPunch")
-		return
+				
+		if event.is_action_pressed("special_kick"):
+			if state_name.ends_with('_SpecialKick'):
+				return
+			character.change_state("Startup_SpecialKick")
+			return
 			
-	if event.is_action_pressed("special_kick"):
-		character.change_state("Startup_SpecialKick")
+		if event.is_action_pressed("jump"):
+			character.change_state("Startup_Jump")
+			return
 		return
-		
-	if character.is_on_floor() and event.is_action_pressed("jump"):
-		character.velocity.y = -character.jump_force
-		character.change_state("Jump")
+	else: #Not on floor
+		if event.is_action_pressed("punch"):
+			if state_name.ends_with('_AirPunch'):
+				return
+			character.change_state("Startup_AirPunch")
+			return
+				
+		if event.is_action_pressed("kick"):
+			if state_name.ends_with('_AirKick'):
+				return
+			character.change_state("Startup_AirKick")
+			return
+			
+		if event.is_action_pressed("special_punch"):
+			if state_name.ends_with('_AirSpecialPunch'):
+				return
+			character.change_state("Startup_AirSpecialPunch")
+			return
+				
+		if event.is_action_pressed("special_kick"):
+			if state_name.ends_with('_AAirSpecialKick'):
+				return
+			character.change_state("Startup_AirSpecialKick")
+			return
 		return
 	pass
 	
@@ -63,18 +94,30 @@ func animation_finished(character : Character,anim_name : String):
 func hit(character: Character,area_id, area, area_shape, self_shape):
 	pass
 	
-func on_hit(character: Character, area_shape, hit_by, damage, hit_stun, knockback, knockback_source, knockdown):
-	var dict : Dictionary = {}
-	dict.hit_by = hit_by
-	dict.area_shape = area_shape
-	dict.damage = damage
-	dict.knockback = knockback
-	dict.hit_stun = hit_stun
-	dict.knockback_source = knockback_source
-	dict.knockdown = knockdown
-	character.state_data['hurt_data']=dict
-	character.change_state("Hurt")
-	#character.take_damage(hit_by,damage)
-	#character.knockback(knockback)
-	#character.velocity = knockback
+func on_hit(character: Character, dict: Dictionary):
+	var hit_count = character.transit_data.get("hit_count", 0) + 1
+	var t_dict = {"hit_count": hit_count, "hit_stun": dict.hit_stun}
+	if dict.soft_knockdown or not character.is_on_floor():
+		character.change_state("AirHurt", t_dict)
+	elif dict.hard_knockdown:
+		# TODO
+		t_dict.hit_stun = 999
+		character.change_state("AirHurt", t_dict)
+	else:
+		character.change_state("Hurt", t_dict)
+	
+	# take_damage will change to Ko state if character dies
+	character.take_damage(dict.hit_by,dict.damage)
+	character.knockback(dict.knockback,dict.hit_by)
+	
+	character.get_node("Debug/Label").text = "%s Hit!" % hit_count
 	pass
+	
+	
+	
+	
+	
+	
+	
+	
+	

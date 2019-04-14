@@ -1,16 +1,27 @@
 extends "res://states/State.gd"
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+var _character
+onready var timer : Timer = $Timer
 
-func _ready():
-	# Called when the node is added to the scene for the first time.
-	# Initialization here
-	pass
+func enter(character):
+	.enter(character)
+	
+	_character = character
+	character.hurt_box.monitorable = false
+	timer.wait_time = 2
+	timer.start()	
+
+func exit(character):
+	.exit(character)
+	if not timer.is_stopped():
+		timer.stop()
 
 func input(character,event):	
 	# Recover
-	if character.is_on_floor():
+	if not character.anim_player.is_playing():
 		character.change_state("Recover")
 	pass
+
+func _on_Timer_timeout():
+	_character.change_state("Recover")
+	pass # Replace with function body.

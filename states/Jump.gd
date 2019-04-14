@@ -1,37 +1,23 @@
 extends "res://states/State.gd"
 
+func enter(character):	
+	.enter(character)
+	if character.transit_data.has("jump_direction"):
+		var jd : Vector2 = character.transit_data.get("jump_direction")
+		# character.velocity.y = -character.jump_force
+		#var temp = jd.normalized() * character.jump_force
+		character.velocity.y = jd.y * character.jump_force
+		character.velocity.x = jd.x * character.move_speed
+	pass
+	
+
+
 func update(character,delta):
-	var move_dir = 0
-	if character.controller.is_action_pressed("move_right"):
-		move_dir += 1
-	if character.controller.is_action_pressed("move_left"):
-		move_dir -= 1
-	character.velocity.x = move_dir * character.move_speed
-	
-	if move_dir != 0:
-		character.face(move_dir)
-		pass
-	
 	if character.is_on_floor():
 		character.change_state("Idle")
 		return
-	
 	pass
 
-
-func input(character,event):
-	if event.is_action_pressed("punch"):
-		character.change_state("AirPunch")
-		return
-			
-	if event.is_action_pressed("kick"):
-		character.change_state("AirKick")
-		return
-		
-	if event.is_action_pressed("special_punch"):
-		character.change_state("AirSpecialPunch")
-		return
-			
-	if event.is_action_pressed("special_kick"):
-		character.change_state("AirSpecialKick")
-		return
+func animation_finished(character : Character,anim_name : String):
+	# Hold the animation
+	pass

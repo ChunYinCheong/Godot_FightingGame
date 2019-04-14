@@ -38,22 +38,30 @@ custom_constants/separation = 30
 alignment = 1
 
 [node name="StartButton" type="Button" parent="HBoxContainer/VBoxContainer/MenuButton"]
-margin_top = 142.0
+margin_top = 117.0
 margin_right = 390.0
-margin_bottom = 162.0
+margin_bottom = 137.0
 focus_next = NodePath("../OptionButton")
 text = "Start"
 
-[node name="OptionButton" type="Button" parent="HBoxContainer/VBoxContainer/MenuButton"]
-margin_top = 192.0
+[node name="PracticeButton" type="Button" parent="HBoxContainer/VBoxContainer/MenuButton"]
+margin_top = 167.0
 margin_right = 390.0
-margin_bottom = 212.0
+margin_bottom = 187.0
+focus_next = NodePath("../OptionButton")
+text = "Practice"
+
+[node name="OptionButton" type="Button" parent="HBoxContainer/VBoxContainer/MenuButton"]
+margin_top = 217.0
+margin_right = 390.0
+margin_bottom = 237.0
+disabled = true
 text = "Option"
 
 [node name="EndButton" type="Button" parent="HBoxContainer/VBoxContainer/MenuButton"]
-margin_top = 242.0
+margin_top = 267.0
 margin_right = 390.0
-margin_bottom = 262.0
+margin_bottom = 287.0
 text = "End"
 
 [node name="VersionLabel" type="Label" parent="HBoxContainer/VBoxContainer"]
@@ -77,5 +85,6 @@ margin_bottom = 252.0
 texture = ExtResource( 2 )
 
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/MenuButton/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/MenuButton/PracticeButton" to="." method="_on_PracticeButton_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/MenuButton/OptionButton" to="." method="_on_OptionButton_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/MenuButton/EndButton" to="." method="_on_EndButton_pressed"]

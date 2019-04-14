@@ -1,9 +1,12 @@
 extends "res://controllers/Controller.gd"
 
-func contoller_ready():
-	.contoller_ready()
-	#print("Plater Contolller ready")
-	set_process_unhandled_input(true)
+func _ready():
+	set_process_unhandled_input(false)
+	pass
+
+func set_enabled(new_value):
+	.set_enabled(new_value)
+	set_process_unhandled_input(new_value)
 	pass
 
 func _unhandled_input(event : InputEvent ):
@@ -11,6 +14,13 @@ func _unhandled_input(event : InputEvent ):
 		character.input(event)	
 	pass
 
-func is_action_pressed(action):
-	return Input.is_action_pressed(action)
+func get_action_strength(action:String):
+	if enabled:
+		return Input.get_action_strength(action)
+	return 0
+
+func is_action_pressed(action:String):
+	if enabled:
+		return Input.is_action_pressed(action)
+	return false
 	

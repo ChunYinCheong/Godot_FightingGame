@@ -1,41 +1,35 @@
 extends "res://states/State.gd"
 
-func update(character,delta):
-	var move_dir = 0
-	if character.controller.is_action_pressed("move_right"):
-		move_dir += 1
-	if character.controller.is_action_pressed("move_left"):
-		move_dir -= 1
-	character.velocity.x = move_dir * character.move_speed
 
+func enter(character: Character):	
+	.enter(character)
 	if not character.is_on_floor():
-		character.change_state("Jump")
+		character.change_state("Active_Jump")
 		return
 	
-	if move_dir != 0:
-		character.face(move_dir)
+	var input = character.controller
+	var x = -input.get_action_strength("move_left") + input.get_action_strength("move_right")
+	if x != 0:
 		character.change_state("Walk")
 		return
-			
+		
+	character.velocity.x = 0
+	pass
+	
+
+func update(character,delta):
+	if not character.is_on_floor():
+		character.change_state("Active_Jump")
+		return
+	character.face_opponent()
 	pass
 	
 func input(character,event):
 	.input(character,event)
 	
 	if event.is_action("move_right") or event.is_action("move_left"):
-		var move_dir = 0
-		if character.controller.is_action_pressed("move_right"):
-			move_dir += 1
-		if character.controller.is_action_pressed("move_left"):
-			move_dir -= 1
-		if move_dir != 0:
-			character.face(move_dir)
+		var input = character.controller
+		var x = -input.get_action_strength("move_left") + input.get_action_strength("move_right")
+		if x != 0:
 			character.change_state("Walk")
-			return
-	
-
-	
-	
-	
-	
-	
+		return

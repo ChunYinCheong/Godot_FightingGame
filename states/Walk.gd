@@ -1,26 +1,36 @@
 extends "res://states/State.gd"
 
 func update(character,delta):
-	var move_dir = 0
-	if character.controller.is_action_pressed("move_right"):
-		move_dir += 1
-	if character.controller.is_action_pressed("move_left"):
-		move_dir -= 1
-	character.velocity.x = move_dir * character.move_speed
-
 	if not character.is_on_floor():
-		character.change_state("Jump")
+		character.change_state("Active_Jump")
 		return
 		
-	if move_dir != 0:
-		character.face(move_dir)
-	else:
-		character.change_state("Idle")
+	var input = character.controller
+	var x = -input.get_action_strength("move_left") + input.get_action_strength("move_right")
+	if (character.facing > 0 and x > 0) or (character.facing < 0 and x < 0):
+		character.velocity.x = x * character.forward_move_speed
+	elif (character.facing > 0 and x < 0) or (character.facing < 0 and x > 0):
+		character.velocity.x = x * character.backward_move_speed
 		
+	if x == 0:
+		character.change_state("Idle")
+		return
+		
+	character.face_opponent()		
 	pass
 	
-func exit(character,dict=null):
+func exit(character):
+	.exit(character)
 	character.velocity.x = 0
 	pass
 
+
+func on_hit(character, dict):
+	var input = character.controller
+	var x = -input.get_action_strength("move_left") + input.get_action_strength("move_right")
+	if (character.facing > 0 and x < 0) or (character.facing < 0 and x > 0):
+		character.change_state("Block", dict)
+		return
+	.on_hit(character, dict)
+	pass
 	
