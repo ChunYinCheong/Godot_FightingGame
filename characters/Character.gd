@@ -23,8 +23,8 @@ var transit_data : Dictionary = {}
 var move_speed : float = 300 #500
 var forward_move_speed : float = 300
 var backward_move_speed : float = 200
-var jump_force : float = 1000
-var gravity : float = 2000
+var jump_force : float = 1300
+var gravity : float = 980 * 3.5
 
 var facing_right : bool = true
 var facing : int = 1
@@ -35,11 +35,12 @@ var x_velocity : Vector2 = Vector2()
 var y_velocity : Vector2 = Vector2()
 var _is_on_floor : bool = false
 var _is_on_wall : bool = false
+var _is_on_right_wall : bool = false
+var _is_on_left_wall : bool = false
 
 var knockbackVelocity : Vector2 = Vector2()
 var knockbackDeceleration : float = 3.0
 var knockbackCutoff : float = 4.0
-var knockback_source = null
 
 var health : float = 1000
 
@@ -95,28 +96,34 @@ func _physics_process(delta):
 		knockbackVelocity.y = lerp(knockbackVelocity.y, 0.0, lerpWeight)
 		if(knockbackVelocity.length() < knockbackCutoff):
 			knockbackVelocity = Vector2()
-			knockback_source = null
 		
 	
-	x_velocity.x = velocity.x + knockbackVelocity.x
-	var x_collision = move_and_collide(x_velocity * delta)
-	if x_collision:
-		#if x_collision.collider is preload("res://characters/Character.gd"):
-		#if x_collision.collider is get_script():
-		if x_collision.collider.has_method("on_push"):
-			x_collision.collider.move_and_collide(x_collision.remainder)
+	x_velocity.x = (velocity.x + knockbackVelocity.x) * delta
+	if x_velocity.length() > 0:
+		var x_collision = move_and_collide(x_velocity )
+		if x_collision:
+			#if x_collision.collider is preload("res://characters/Character.gd"):
+			#if x_collision.collider is get_script():
+			if x_collision.collider.has_method("on_push"):
+				x_collision.collider.move_and_collide(x_collision.remainder)
+				_is_on_wall = false
+				pass
+			else:
+				# collide with wall
+				_is_on_wall = true
+				if x_velocity.x > 0:
+					_is_on_right_wall = true
+				elif x_velocity.x < 0 :
+					_is_on_left_wall = true
+				pass			
 			pass
 		else:
-			# collide with wall
-			if knockback_source:
-				knockback_source.move_and_collide(Vector2(-x_collision.remainder.x, 0))
-			pass			
-		pass
-	else:
-		_is_on_wall = false
-		pass
+			_is_on_wall = false
+			_is_on_left_wall = false
+			_is_on_right_wall = false
+			pass
 	
-	y_velocity.y = velocity.y + knockbackVelocity.y
+	y_velocity.y = velocity.y + (delta * gravity / 2)
 	var y_collision = move_and_collide(y_velocity * delta)
 	if y_collision:
 		if y_collision.collider.has_method("on_push"):
@@ -149,18 +156,14 @@ func _physics_process(delta):
 			_is_on_floor = false
 			pass			
 		else:
-			y_velocity.y = y_collision.remainder.y			
+			#y_velocity.y = y_collision.remainder.y			
 			_is_on_floor = true
 	elif y_velocity:
 		_is_on_floor = false
 	else:
 		# Do Nothing Vector2(0,0)
 		pass
-	y_velocity.y += delta * gravity	
-	velocity.y = y_velocity.y
-	#var max_y_velcoity = 10000
-	#if y_velocity.y > max_y_velcoity:
-	#	y_velocity.y = max_y_velcoity
+	velocity.y += delta * gravity	
 		
 	state.update(self,delta)
 	$Debug/Label3.text = "is_on_floor(): " + str(self.is_on_floor()) + " / " + str(_is_on_floor)
@@ -171,15 +174,41 @@ func _physics_process(delta):
 
 func is_on_floor():
 	return _is_on_floor #or .is_on_floor()
+func is_on_wall():
+	return _is_on_wall
+func is_on_right_wall():
+	return _is_on_right_wall
+func is_on_left_wall():
+	return _is_on_left_wall
 	
+func on_push(x_velocity):
+	var x_collision = move_and_collide(x_velocity)
+	if x_collision:
+		#if x_collision.collider is preload("res://characters/Character.gd"):
+		#if x_collision.collider is get_script():
+		if x_collision.collider.has_method("on_push"):
+			#x_collision.collider.move_and_collide(x_collision.remainder)
+			_is_on_wall = false
+			pass
+		else:
+			# collide with wall
+			_is_on_wall = true
+			if x_velocity.x > 0:
+				_is_on_right_wall = true
+			elif x_velocity.x < 0 :
+				_is_on_left_wall = true
+			pass			
+		pass
+	else:
+		_is_on_wall = false
+		_is_on_left_wall = false
+		_is_on_right_wall = false
+		pass
 	
-func on_push(remainder):
-	move_and_collide(remainder)
 	pass
 	
-func knockback(vel, source):
+func knockback(vel):
 	knockbackVelocity = vel
-	knockback_source = source
 	# g / 60 *  (-g +- sqrt(g^2 + 4*g*7200*t)) / 2g
 	# (-g +- sqrt(g^2 + 4*g*7200*t)) / 120
 	var temp = sqrt(gravity*gravity-4*gravity*7200*knockbackVelocity.y)

@@ -1,22 +1,21 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://characters/Character.tscn" type="PackedScene" id=1]
 [ext_resource path="res://characters/red/red.png" type="Texture" id=2]
 
-[sub_resource type="RectangleShape2D" id=33]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 20, 85 )
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 50, 12.185 )
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 14.4393, 15.5118 )
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 30, 60 )
 
-[sub_resource type="Animation" id=4]
-resource_name = "Active_AirKick"
+[sub_resource type="Animation" id=5]
 length = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -31,8 +30,7 @@ tracks/0/keys = {
 "values": [ 82 ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "Active_AirPunch"
+[sub_resource type="Animation" id=6]
 length = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -47,7 +45,7 @@ tracks/0/keys = {
 "values": [ 72 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -59,22 +57,6 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ 62 ]
-}
-
-[sub_resource type="Animation" id=7]
-length = 0.05
-step = 0.05
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 52 ]
 }
 
 [sub_resource type="Animation" id=8]
@@ -90,7 +72,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 22 ]
+"values": [ 52 ]
 }
 
 [sub_resource type="Animation" id=9]
@@ -106,7 +88,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 32 ]
+"values": [ 22 ]
 }
 
 [sub_resource type="Animation" id=10]
@@ -122,11 +104,26 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 42 ]
+"values": [ 32 ]
 }
 
 [sub_resource type="Animation" id=11]
-resource_name = "AirHurt"
+length = 0.05
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 42 ]
+}
+
+[sub_resource type="Animation" id=12]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -141,7 +138,7 @@ tracks/0/keys = {
 "values": [ 140, 141, 142, 143 ]
 }
 
-[sub_resource type="Animation" id=32]
+[sub_resource type="Animation" id=13]
 resource_name = "AirRecover"
 length = 0.3
 tracks/0/type = "value"
@@ -157,7 +154,7 @@ tracks/0/keys = {
 "values": [ 150, 151, 152 ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=14]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -171,7 +168,22 @@ tracks/0/keys = {
 "values": [ 120 ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=15]
+resource_name = "HardKnockdown"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 100, 101, 102 ]
+}
+
+[sub_resource type="Animation" id=16]
 length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -186,7 +198,7 @@ tracks/0/keys = {
 "values": [ 90, 91, 92 ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=17]
 loop = true
 step = 0.2
 tracks/0/type = "value"
@@ -202,7 +214,7 @@ tracks/0/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=18]
 length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -211,13 +223,13 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 100, 101, 102 ]
+"values": [ 102 ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=19]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -231,7 +243,7 @@ tracks/0/keys = {
 "values": [ 130, 131 ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=20]
 length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -246,7 +258,7 @@ tracks/0/keys = {
 "values": [ 110, 111, 112 ]
 }
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="Animation" id=21]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -261,7 +273,7 @@ tracks/0/keys = {
 "values": [ 83 ]
 }
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=22]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -276,7 +288,7 @@ tracks/0/keys = {
 "values": [ 73 ]
 }
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=23]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -291,7 +303,7 @@ tracks/0/keys = {
 "values": [ 53 ]
 }
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=24]
 length = 0.2
 step = 0.05
 tracks/0/type = "value"
@@ -307,8 +319,8 @@ tracks/0/keys = {
 "values": [ 23 ]
 }
 
-[sub_resource type="Animation" id=22]
-length = 0.2
+[sub_resource type="Animation" id=25]
+length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -322,8 +334,8 @@ tracks/0/keys = {
 "values": [ 33 ]
 }
 
-[sub_resource type="Animation" id=23]
-length = 0.3
+[sub_resource type="Animation" id=26]
+length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -337,7 +349,22 @@ tracks/0/keys = {
 "values": [ 43 ]
 }
 
-[sub_resource type="Animation" id=24]
+[sub_resource type="Animation" id=27]
+resource_name = "SoftKnockdown"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 100, 101, 102 ]
+}
+
+[sub_resource type="Animation" id=28]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -364,7 +391,7 @@ tracks/1/keys = {
 "values": [ Vector2( 55.9096, 33.7432 ) ]
 }
 
-[sub_resource type="Animation" id=25]
+[sub_resource type="Animation" id=29]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -391,7 +418,7 @@ tracks/1/keys = {
 "values": [ Vector2( 57.3726, -38.9206 ) ]
 }
 
-[sub_resource type="Animation" id=26]
+[sub_resource type="Animation" id=30]
 length = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -406,7 +433,7 @@ tracks/0/keys = {
 "values": [ 60 ]
 }
 
-[sub_resource type="Animation" id=27]
+[sub_resource type="Animation" id=31]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -433,7 +460,7 @@ tracks/1/keys = {
 "values": [ Vector2( 56.8849, 8.8717 ) ]
 }
 
-[sub_resource type="Animation" id=28]
+[sub_resource type="Animation" id=32]
 length = 0.1
 step = 0.05
 tracks/0/type = "value"
@@ -461,7 +488,7 @@ tracks/1/keys = {
 "values": [ Vector2( 55.9095, -32.5808 ) ]
 }
 
-[sub_resource type="Animation" id=29]
+[sub_resource type="Animation" id=33]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -488,7 +515,7 @@ tracks/1/keys = {
 "values": [ Vector2( 49.082, -52.5755 ) ]
 }
 
-[sub_resource type="Animation" id=30]
+[sub_resource type="Animation" id=34]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -515,7 +542,7 @@ tracks/1/keys = {
 "values": [ Vector2( 52.9835, -29.6547 ) ]
 }
 
-[sub_resource type="Animation" id=31]
+[sub_resource type="Animation" id=35]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -533,69 +560,68 @@ tracks/0/keys = {
 [node name="Red" index="0" instance=ExtResource( 1 )]
 
 [node name="CollisionShape2D" parent="." index="0"]
-shape = SubResource( 33 )
+shape = SubResource( 1 )
 
 [node name="HitBox" parent="." index="1"]
 visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]
 position = Vector2( 57.3726, -38.9206 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="HurtBox" parent="." index="2"]
 visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2( 0, -68.4397 )
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="HurtBox" index="1"]
 position = Vector2( 0, 6.67766 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="Sprite" parent="." index="3"]
 texture = ExtResource( 2 )
 vframes = 17
 hframes = 10
-frame = 110
+frame = 102
 region_enabled = false
 
 [node name="AnimationPlayer" parent="." index="4"]
-anims/Active_AirKick = SubResource( 4 )
-anims/Active_AirPunch = SubResource( 5 )
-anims/Active_Jump = SubResource( 6 )
-anims/Active_Kick = SubResource( 7 )
-anims/Active_Punch = SubResource( 8 )
-anims/Active_Punch2 = SubResource( 9 )
-anims/Active_Punch3 = SubResource( 10 )
-anims/AirHurt = SubResource( 11 )
-anims/AirRecover = SubResource( 32 )
-anims/Block = SubResource( 12 )
-anims/Hurt = SubResource( 13 )
-anims/Idle = SubResource( 14 )
-anims/Knockdown = SubResource( 15 )
-anims/Ko = SubResource( 16 )
-anims/Recover = SubResource( 17 )
-anims/Recovery_AirKick = SubResource( 18 )
-anims/Recovery_AirPunch = SubResource( 19 )
-anims/Recovery_Kick = SubResource( 20 )
-anims/Recovery_Punch = SubResource( 21 )
-anims/Recovery_Punch2 = SubResource( 22 )
-anims/Recovery_Punch3 = SubResource( 23 )
-anims/Startup_AirKick = SubResource( 24 )
-anims/Startup_AirPunch = SubResource( 25 )
-anims/Startup_Jump = SubResource( 26 )
-anims/Startup_Kick = SubResource( 27 )
-anims/Startup_Punch = SubResource( 28 )
-anims/Startup_Punch2 = SubResource( 29 )
-anims/Startup_Punch3 = SubResource( 30 )
-anims/Walk = SubResource( 31 )
+anims/Active_AirKick = SubResource( 5 )
+anims/Active_AirPunch = SubResource( 6 )
+anims/Active_Jump = SubResource( 7 )
+anims/Active_Kick = SubResource( 8 )
+anims/Active_Punch = SubResource( 9 )
+anims/Active_Punch2 = SubResource( 10 )
+anims/Active_Punch3 = SubResource( 11 )
+anims/AirHurt = SubResource( 12 )
+anims/AirRecover = SubResource( 13 )
+anims/Block = SubResource( 14 )
+anims/HardKnockdown = SubResource( 15 )
+anims/Hurt = SubResource( 16 )
+anims/Idle = SubResource( 17 )
+anims/Knockdown = SubResource( 18 )
+anims/Ko = SubResource( 19 )
+anims/Recover = SubResource( 20 )
+anims/Recovery_AirKick = SubResource( 21 )
+anims/Recovery_AirPunch = SubResource( 22 )
+anims/Recovery_Kick = SubResource( 23 )
+anims/Recovery_Punch = SubResource( 24 )
+anims/Recovery_Punch2 = SubResource( 25 )
+anims/Recovery_Punch3 = SubResource( 26 )
+anims/SoftKnockdown = SubResource( 27 )
+anims/Startup_AirKick = SubResource( 28 )
+anims/Startup_AirPunch = SubResource( 29 )
+anims/Startup_Jump = SubResource( 30 )
+anims/Startup_Kick = SubResource( 31 )
+anims/Startup_Punch = SubResource( 32 )
+anims/Startup_Punch2 = SubResource( 33 )
+anims/Startup_Punch3 = SubResource( 34 )
+anims/Walk = SubResource( 35 )
 
-[node name="Active_Punch3" parent="StateMachine" index="18"]
+[node name="Active_Punch3" parent="StateMachine" index="20"]
 soft_knockdown = true
 
-[node name="Active_Kick" parent="StateMachine" index="30"]
-damage = 300
-knockback = Vector2( 50, -250 )
+[node name="Active_Kick" parent="StateMachine" index="32"]
 soft_knockdown = true
-

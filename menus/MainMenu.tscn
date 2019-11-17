@@ -83,7 +83,6 @@ margin_top = 188.0
 margin_right = 227.0
 margin_bottom = 252.0
 texture = ExtResource( 2 )
-
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/MenuButton/StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/MenuButton/PracticeButton" to="." method="_on_PracticeButton_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/MenuButton/OptionButton" to="." method="_on_OptionButton_pressed"]

@@ -8,7 +8,7 @@ func enter(character):
 	.enter(character)	
 	_character = character
 	var dict = character.transit_data
-	character.knockback(dict.knockback,dict.hit_by)
+	character.knockback(dict.block_knockback)
 	timer.wait_time = 0.2
 	timer.start()
 

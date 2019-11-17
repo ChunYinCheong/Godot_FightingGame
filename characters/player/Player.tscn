@@ -74,4 +74,3 @@ anims/Idle = ExtResource( 3 )
 anims/Jump = ExtResource( 4 )
 anims/Punch = SubResource( 3 )
 anims/Walk = ExtResource( 5 )
-

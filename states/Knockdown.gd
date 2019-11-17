@@ -1,27 +1,21 @@
 extends "res://states/State.gd"
 
-var _character
-onready var timer : Timer = $Timer
+var timer : float = 3
 
 func enter(character):
 	.enter(character)
 	
-	_character = character
 	character.hurt_box.monitorable = false
-	timer.wait_time = 2
-	timer.start()	
+	timer = 3
 
-func exit(character):
-	.exit(character)
-	if not timer.is_stopped():
-		timer.stop()
+func update(character,delta):
+	timer -= delta
+	if timer <= 0:
+		character.change_state("Recover")
+	pass
 
 func input(character,event):	
 	# Recover
 	if not character.anim_player.is_playing():
 		character.change_state("Recover")
 	pass
-
-func _on_Timer_timeout():
-	_character.change_state("Recover")
-	pass # Replace with function body.

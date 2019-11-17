@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://characters/Character.gd" type="Script" id=1]
 [ext_resource path="res://characters/HurtBox.gd" type="Script" id=2]
@@ -8,16 +8,18 @@
 [ext_resource path="res://states/Hurt.gd" type="Script" id=6]
 [ext_resource path="res://states/AirHurt.gd" type="Script" id=7]
 [ext_resource path="res://states/Knockdown.gd" type="Script" id=8]
-[ext_resource path="res://states/Recover.gd" type="Script" id=9]
-[ext_resource path="res://states/AirRecover.gd" type="Script" id=10]
-[ext_resource path="res://states/Walk.gd" type="Script" id=11]
-[ext_resource path="res://states/Startup_Jump.gd" type="Script" id=12]
-[ext_resource path="res://states/Jump.gd" type="Script" id=13]
-[ext_resource path="res://states/Attack.gd" type="Script" id=14]
-[ext_resource path="res://states/AirAttack.gd" type="Script" id=15]
-[ext_resource path="res://controllers/Controller.gd" type="Script" id=16]
-[ext_resource path="res://controllers/AiController.gd" type="Script" id=17]
-[ext_resource path="res://controllers/PlayerController.gd" type="Script" id=18]
+[ext_resource path="res://states/SoftKnockdown.gd" type="Script" id=9]
+[ext_resource path="res://states/HardKnockdown.gd" type="Script" id=10]
+[ext_resource path="res://states/Recover.gd" type="Script" id=11]
+[ext_resource path="res://states/AirRecover.gd" type="Script" id=12]
+[ext_resource path="res://states/Walk.gd" type="Script" id=13]
+[ext_resource path="res://states/Startup_Jump.gd" type="Script" id=14]
+[ext_resource path="res://states/Jump.gd" type="Script" id=15]
+[ext_resource path="res://states/Attack.gd" type="Script" id=16]
+[ext_resource path="res://states/AirAttack.gd" type="Script" id=17]
+[ext_resource path="res://controllers/Controller.gd" type="Script" id=18]
+[ext_resource path="res://controllers/AiController.gd" type="Script" id=19]
+[ext_resource path="res://controllers/PlayerController.gd" type="Script" id=20]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 20, 85 )
@@ -52,6 +54,7 @@ autoplay = "Idle"
 playback_process_mode = 0
 
 [node name="StateMachine" type="Node" parent="."]
+editor/display_folded = true
 
 [node name="Idle" type="Node" parent="StateMachine"]
 script = ExtResource( 3 )
@@ -83,28 +86,32 @@ one_shot = true
 [node name="Knockdown" type="Node" parent="StateMachine"]
 script = ExtResource( 8 )
 
-[node name="Timer" type="Timer" parent="StateMachine/Knockdown"]
-
-[node name="Recover" type="Node" parent="StateMachine"]
+[node name="SoftKnockdown" type="Node" parent="StateMachine"]
 script = ExtResource( 9 )
 
-[node name="AirRecover" type="Node" parent="StateMachine"]
+[node name="HardKnockdown" type="Node" parent="StateMachine"]
 script = ExtResource( 10 )
 
-[node name="Walk" type="Node" parent="StateMachine"]
+[node name="Recover" type="Node" parent="StateMachine"]
 script = ExtResource( 11 )
 
-[node name="Startup_Jump" type="Node" parent="StateMachine"]
+[node name="AirRecover" type="Node" parent="StateMachine"]
 script = ExtResource( 12 )
 
-[node name="Active_Jump" type="Node" parent="StateMachine"]
+[node name="Walk" type="Node" parent="StateMachine"]
 script = ExtResource( 13 )
+
+[node name="Startup_Jump" type="Node" parent="StateMachine"]
+script = ExtResource( 14 )
+
+[node name="Active_Jump" type="Node" parent="StateMachine"]
+script = ExtResource( 15 )
 
 [node name="Startup_Punch" type="Node" parent="StateMachine"]
 script = ExtResource( 4 )
 
 [node name="Active_Punch" type="Node" parent="StateMachine"]
-script = ExtResource( 14 )
+script = ExtResource( 16 )
 
 [node name="Recovery_Punch" type="Node" parent="StateMachine"]
 script = ExtResource( 4 )
@@ -113,7 +120,7 @@ script = ExtResource( 4 )
 script = ExtResource( 4 )
 
 [node name="Active_Punch2" type="Node" parent="StateMachine"]
-script = ExtResource( 14 )
+script = ExtResource( 16 )
 
 [node name="Recovery_Punch2" type="Node" parent="StateMachine"]
 script = ExtResource( 4 )
@@ -122,7 +129,8 @@ script = ExtResource( 4 )
 script = ExtResource( 4 )
 
 [node name="Active_Punch3" type="Node" parent="StateMachine"]
-script = ExtResource( 14 )
+script = ExtResource( 16 )
+hit_knockback = Vector2( 500, 0 )
 
 [node name="Recovery_Punch3" type="Node" parent="StateMachine"]
 script = ExtResource( 4 )
@@ -131,7 +139,7 @@ script = ExtResource( 4 )
 script = ExtResource( 4 )
 
 [node name="Active_AirPunch" type="Node" parent="StateMachine"]
-script = ExtResource( 15 )
+script = ExtResource( 17 )
 
 [node name="Recovery_AirPunch" type="Node" parent="StateMachine"]
 script = ExtResource( 4 )
@@ -140,7 +148,7 @@ script = ExtResource( 4 )
 script = ExtResource( 4 )
 
 [node name="Active_SpecialPunch" type="Node" parent="StateMachine"]
-script = ExtResource( 14 )
+script = ExtResource( 16 )
 
 [node name="Recovery_SpecialPunch" type="Node" parent="StateMachine"]
 script = ExtResource( 4 )
@@ -149,7 +157,7 @@ script = ExtResource( 4 )
 script = ExtResource( 4 )
 
 [node name="Active_AirSpecialPunch" type="Node" parent="StateMachine"]
-script = ExtResource( 15 )
+script = ExtResource( 17 )
 
 [node name="Recovery_AirSpecialPunch" type="Node" parent="StateMachine"]
 script = ExtResource( 4 )
@@ -158,7 +166,8 @@ script = ExtResource( 4 )
 script = ExtResource( 4 )
 
 [node name="Active_Kick" type="Node" parent="StateMachine"]
-script = ExtResource( 14 )
+script = ExtResource( 16 )
+hit_knockback = Vector2( 50, -100 )
 
 [node name="Recovery_Kick" type="Node" parent="StateMachine"]
 script = ExtResource( 4 )
@@ -167,7 +176,7 @@ script = ExtResource( 4 )
 script = ExtResource( 4 )
 
 [node name="Active_AirKick" type="Node" parent="StateMachine"]
-script = ExtResource( 15 )
+script = ExtResource( 17 )
 
 [node name="Recovery_AirKick" type="Node" parent="StateMachine"]
 script = ExtResource( 4 )
@@ -176,7 +185,7 @@ script = ExtResource( 4 )
 script = ExtResource( 4 )
 
 [node name="Active_SpecialKick" type="Node" parent="StateMachine"]
-script = ExtResource( 14 )
+script = ExtResource( 16 )
 
 [node name="Recovery_SpecialKick" type="Node" parent="StateMachine"]
 script = ExtResource( 4 )
@@ -185,24 +194,25 @@ script = ExtResource( 4 )
 script = ExtResource( 4 )
 
 [node name="Active_AirSpecialKick" type="Node" parent="StateMachine"]
-script = ExtResource( 15 )
+script = ExtResource( 17 )
 
 [node name="Recovery_AirSpecialKick" type="Node" parent="StateMachine"]
 script = ExtResource( 4 )
 
 [node name="Controller" type="Node" parent="."]
+editor/display_folded = true
 
 [node name="DefaultController" type="Node" parent="Controller"]
-script = ExtResource( 16 )
-
-[node name="AiController" type="Node" parent="Controller"]
-script = ExtResource( 17 )
-
-[node name="PlayerController" type="Node" parent="Controller"]
 script = ExtResource( 18 )
 
+[node name="AiController" type="Node" parent="Controller"]
+script = ExtResource( 19 )
+
+[node name="PlayerController" type="Node" parent="Controller"]
+script = ExtResource( 20 )
+
 [node name="Debug" type="Control" parent="."]
-editor/display_folded = true
+visible = false
 
 [node name="Label" type="Label" parent="Debug"]
 margin_right = 40.0
@@ -236,8 +246,13 @@ margin_right = 41.3268
 margin_bottom = 64.4203
 text = "Vel"
 
+[node name="Label6" type="Label" parent="Debug"]
+margin_left = 1.32684
+margin_top = -34.7768
+margin_right = 41.3268
+margin_bottom = -20.7768
+text = "hit"
 [connection signal="area_shape_entered" from="HitBox" to="." method="_on_HitBox_area_shape_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="StateMachine/Block/Timer" to="StateMachine/Block" method="_on_Timer_timeout"]
 [connection signal="timeout" from="StateMachine/Hurt/Timer" to="StateMachine/Hurt" method="_on_Timer_timeout"]
-[connection signal="timeout" from="StateMachine/Knockdown/Timer" to="StateMachine/Knockdown" method="_on_Timer_timeout"]

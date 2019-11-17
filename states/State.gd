@@ -95,22 +95,36 @@ func hit(character: Character,area_id, area, area_shape, self_shape):
 	pass
 	
 func on_hit(character: Character, dict: Dictionary):
+	print("on_hit: ", name)
+	
 	var hit_count = character.transit_data.get("hit_count", 0) + 1
 	var t_dict = {"hit_count": hit_count, "hit_stun": dict.hit_stun}
-	if dict.soft_knockdown or not character.is_on_floor():
-		character.change_state("AirHurt", t_dict)
-	elif dict.hard_knockdown:
-		# TODO
-		t_dict.hit_stun = 999
+		
+	if dict.hard_knockdown:
+		character.change_state("HardKnockdown", t_dict)
+	elif dict.soft_knockdown:
+		character.change_state("SoftKnockdown", t_dict)
+	elif not character.is_on_floor():
 		character.change_state("AirHurt", t_dict)
 	else:
 		character.change_state("Hurt", t_dict)
 	
-	# take_damage will change to Ko state if character dies
-	character.take_damage(dict.hit_by,dict.damage)
-	character.knockback(dict.knockback,dict.hit_by)
 	
-	character.get_node("Debug/Label").text = "%s Hit!" % hit_count
+	# take_damage will change to Ko state if character dies
+	character.take_damage(dict.hit_by,dict.hit_damage)
+	if dict.hit_knockback.x != 0:
+		if character.is_on_wall():
+			if  dict.hit_knockback.x > 0 and character.is_on_right_wall():
+				var ks = dict.knockback_source
+				ks.knockback(dict.reknockback)
+			elif dict.hit_knockback.x < 0 and character.is_on_left_wall():
+				var ks = dict.knockback_source
+				ks.knockback(dict.reknockback)
+	character.knockback(dict.hit_knockback)
+		
+	
+	
+	character.get_node("Debug/Label6").text = "%s Hit!" % hit_count
 	pass
 	
 	
